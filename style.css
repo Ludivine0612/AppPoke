@@ -911,3 +911,27 @@ button:active {
         min-width: 100%;
     }
 }
+
+/* --- STYLES POUR LES CONFETTIS --- */
+.confetti {
+    position: fixed; /* Reste visible même si on défile */
+    width: 10px;
+    height: 16px;
+    top: -20px; /* Démarre juste au-dessus de l'écran */
+    z-index: 9999; /* Passe par-dessus absolument tout */
+    border-radius: 2px;
+    pointer-events: none; /* Empêche de bloquer les clics de l'utilisateur */
+    animation: chuteConfetti linear forwards;
+}
+
+/* L'animation qui fait tomber et tourner les confettis */
+@keyframes chuteConfetti {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(105vh) rotate(720deg); /* Tombe plus bas que le bas de l'écran */
+        opacity: 0;
+    }
+}
