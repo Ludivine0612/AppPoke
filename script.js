@@ -74,30 +74,198 @@ async function chargerDonnees() {
             });
         } else {
             // Dictionnaire de secours ultra-rapide des principaux Pokémon français complexes si GitHub est inaccessible
-            const backupFr = {
-                "bulbizarre": 1, "herbizarre": 2, "florizarre": 3, "salameche": 4, "reptincel": 5, "dracaufeu": 6,
-                "carapuce": 7, "carabaffe": 8, "tortank": 9, "chenipan": 10, "chrysacier": 11, "papilusion": 12,
-                "aspicot": 13, "coconfort": 14, "dardargnan": 15, "roucool": 16, "roucoups": 17, "roucarnage": 18,
-                "rattata": 19, "rattatac": 20, "piafabec": 21, "rapasdepic": 22, "abo": 23, "arbok": 24, "pikachu": 25,
-                "raichu": 26, "sabelette": 27, "sablaireau": 28, "nidoran": 29, "melofee": 35, "goupix": 37, "feunard": 38,
-                "nosferapti": 41, "nosferalto": 42, "mystherbe": 43, "ortide": 44, "rafflezia": 45, "miaouss": 52,
-                "persian": 53, "psykokwak": 54, "akwakwak": 55, "caninos": 58, "arcanin": 59, "ptitard": 60,
-                "tetarte": 61, "tartard": 62, "abra": 63, "kadabra": 64, "alakazam": 65, "machoc": 66, "machopeur": 67,
-                "mackogneur": 68, "chetiflor": 69, "boustiflor": 70, "empiflor": 71, "tentacool": 72, "tentacruel": 73,
-                "ponyta": 77, "galopa": 78, "ramoloss": 79, "flagadoss": 80, "magneti": 81, "magneton": 82, "canarticho": 83,
-                "doduo": 84, "dodorio": 85, "otaria": 86, "lamantine": 87, "tadmorv": 88, "grotadmorv": 89, "kokiyas": 90,
-                "crustabri": 91, "fantominus": 92, "spectrum": 93, "ectoplasma": 94, "onix": 95, "soporifik": 96,
-                "hypnomade": 97, "krabby": 98, "krabboss": 99, "voltorbe": 100, "electrode": 101, "noeunoeuf": 102,
-                "noadkoko": 103, "osselelet": 104, "ossatueur": 105, "kicklee": 106, "tygnon": 107, "excelangue": 108,
-                "smogo": 109, "smogogo": 110, "rhinocorn": 111, "rhinoferos": 112, "leveinard": 113, "saquedeneu": 114,
-                "kangourex": 115, "hypococean": 117, "poisseneon": 118, "poissoroy": 119, "stari": 120, "staross": 121,
-                "mimiq": 122, "insecateur": 123, "lippoutou": 124, "elektek": 125, "magmar": 126, "scarabrute": 127,
-                "tauros": 128, "magicarde": 129, "leviator": 130, "lokhlass": 131, "metamorph": 132, "evoli": 133,
-                "aquali": 134, "voltali": 135, "pyroli": 136, "porygon": 137, "amonita": 138, "amonistar": 139,
-                "kabuto": 140, "kabutops": 141, "ptera": 142, "ronflex": 143, "artikodin": 144, "electhor": 145,
-                "sulfura": 146, "minidraco": 147, "draco": 148, "dracolosse": 149, "mewtwo": 150, "mew": 151,
-                "mentali": 196, "noctali": 197, "ouisticram": 390, "phyllali": 470, "givrali": 471, "nymphali": 700, 
-                "klefki": 707, "tousselin": 707, "mimiqui": 778
+const backupFr = {
+// --- KANTO (1 - 151) ---
+  1: "Bulbizarre", 2: "Herbizarre", 3: "Florizarre", 4: "Salamèche", 5: "Reptincel", 6: "Dracaufeu",
+  7: "Carapuce", 8: "Carabaffe", 9: "Tortank", 10: "Chenipan", 11: "Chrysacier", 12: "Papilusion",
+  13: "Aspicot", 14: "Coconfort", 15: "Dardargnan", 16: "Roucool", 17: "Roucoups", 18: "Roucarnage",
+  19: "Rattata", 20: "Rattatac", 21: "Piafabec", 22: "Rapasdepic", 23: "Abo", 24: "Arbok", 25: "Pikachu",
+  26: "Raichu", 27: "Sabelette", 28: "Sablaireau", 29: "Nidoran♀", 30: "Nidorina", 31: "Nidoqueen",
+  32: "Nidoran♂", 33: "Nidorino", 34: "Nidoking", 35: "Mélofée", 36: "Mélodelfe", 37: "Goupix",
+  38: "Feunard", 39: "Rondoudou", 40: "Grodoudou", 41: "Nosferapti", 42: "Nosferalto", 43: "Mystherbe",
+  44: "Ortide", 45: "Rafflezia", 46: "Paras", 47: "Parasect", 48: "Mimitoss", 49: "Aéromite",
+  50: "Taupiqueur", 51: "Triopikeur", 52: "Miaouss", 53: "Persian", 54: "Psykokwak", 55: "Akwakwak",
+  56: "Férosinge", 57: "Colossinge", 58: "Caninos", 59: "Arcanin", 60: "Ptitard", 61: "Têtarte",
+  62: "Tartard", 63: "Abra", 64: "Kadabra", 65: "Alakazam", 66: "Machoc", 67: "Machopeur",
+  68: "Mackogneur", 69: "Chétiflor", 70: "Boustiflor", 71: "Empiflor", 72: "Tentacool", 73: "Tentacruel",
+  74: "Racaillou", 75: "Gravalanch", 76: "Golem", 77: "Ponyta", 78: "Galopa", 79: "Ramoloss",
+  80: "Flagadoss", 81: "Magnéti", 82: "Magnéton", 83: "Canarticho", 84: "Doduo", 85: "Dodrio",
+  86: "Otaria", 87: "Lamantine", 88: "Tadmorv", 89: "Grotadmorv", 90: "Kokiyas", 91: "Crustabri",
+  92: "Fantominus", 93: "Spectrum", 94: "Ectoplasma", 95: "Onix", 96: "Soporifik", 97: "Hypnomade",
+  98: "Krabby", 99: "Krabboss", 100: "Voltorbe", 101: "Électrode", 102: "Noeunoeuf", 103: "Noadkoko",
+  104: "Osselet", 105: "Ossatueur", 106: "Kicklee", 107: "Tygnon", 108: "Excelangue", 109: "Smogo",
+  110: "Smogogo", 111: "Rhinocorn", 112: "Rhinoféros", 113: "Leveinard", 114: "Saquedeneu", 115: "Kangourex",
+  116: "Hypocéan", 117: "Hyporoi", 118: "Poisseneon", 119: "Poissoroy", 120: "Stari", 121: "Staross",
+  122: "M. Mime", 123: "Insécateur", 124: "Lippoutou", 125: "Élektek", 126: "Magmar", 127: "Scarabrute",
+  128: "Tauros", 129: "Magicarpe", 130: "Léviator", 131: "Lokhlass", 132: "Métamorph", 133: "Évoli",
+  134: "Aquali", 135: "Voltali", 136: "Pyroli", 137: "Porygon", 138: "Amonita", 139: "Amonistar",
+  140: "Kabuto", 141: "Kabutops", 142: "Ptéra", 143: "Ronflex", 144: "Artikodin", 145: "Électhor",
+  146: "Sulfura", 147: "Minidraco", 148: "Draco", 149: "Dracolosse", 150: "Mewtwo", 151: "Mew",
+
+  // --- JOHTO (152 - 251) ---
+  152: "Germignon", 153: "Macronium", 154: "Méganium", 155: "Héricendre", 156: "Feurisson", 157: "Typhlosion",
+  158: "Kaiminus", 159: "Crocrodil", 160: "Aligatueur", 161: "Furet", 162: "Fouinar", 163: "Hoothoot",
+  164: "Noarfang", 165: "Coxy", 166: "Coxyclaque", 167: "Mimigal", 168: "Migalos", 169: "Nostenfer",
+  170: "Loupio", 171: "Lanturn", 172: "Pichu", 173: "Mélo", 174: "Toudoudou", 175: "Togepi",
+  176: "Togetic", 177: "Natu", 178: "Xatu", 179: "Wattouat", 180: "Lainergie", 181: "Pharamp",
+  182: "Joliflor", 183: "Marill", 184: "Azumarill", 185: "Simularbre", 186: "Tarpaud", 187: "Granivol",
+  188: "Floravol", 189: "Cotovol", 190: "Capumain", 191: "Tournegrin", 192: "Héliatronc", 193: "Yanma",
+  194: "Axoloto", 195: "Maraiste", 196: "Mentali", 197: "Noctali", 198: "Cornèbre", 199: "Roigada",
+  200: "Feuforêve", 201: "Zarbi", 202: "Qulbutoké", 203: "Girafarig", 204: "Pomdepik", 205: "Forretress",
+  206: "Insolourdo", 207: "Scorplane", 208: "Steelix", 209: "Snubbull", 210: "Granbull", 211: "Qwilfish",
+  212: "Cizayox", 213: "Caratroc", 214: "Scarhino", 215: "Farfuret", 216: "Teddiursa", 217: "Ursaring",
+  218: "Limagma", 219: "Volcaropod", 220: "Marcacrin", 221: "Cochignon", 222: "Corayon", 223: "Rémoraid",
+  224: "Octillery", 225: "Cadoizo", 226: "Démanta", 227: "Airmure", 228: "Malosse", 229: "Démolosse",
+  230: "Hyporoi", 231: "Phanpy", 232: "Donphan", 233: "Porygon2", 234: "Cerfrousse", 235: "Queulorior",
+  236: "Debugant", 237: "Kapoera", 238: "Lippouti", 239: "Élekid", 240: "Magby", 241: "Écremeuh",
+  242: "Leuphorie", 243: "Raikou", 244: "Entei", 245: "Suicune", 246: "Embrylex", 247: "Ymphect",
+  248: "Tyranocif", 249: "Lugia", 250: "Ho-Oh", 251: "Célébi",
+
+  // --- HOENN (252 - 386) ---
+  252: "Arcko", 253: "Massko", 254: "Jungko", 255: "Poussifeu", 256: "Galifeu", 257: "Braségali",
+  258: "Gobou", 259: "Flobio", 260: "Laggron", 261: "Médhyèna", 262: "Grahyèna", 263: "Zigzaton",
+  264: "Linéon", 265: "Chenipotte", 266: "Armulys", 267: "Charmillon", 268: "Blindalys", 269: "Papinox",
+  270: "Nénupiot", 271: "Lombre", 272: "Ludicolo", 273: "Grainipiot", 274: "Pifeuil", 275: "Tengalice",
+  276: "Nirondelle", 277: "Hélédelle", 278: "Goélise", 279: "Békipan", 280: "Tarsal", 281: "Kirlia",
+  282: "Gardevoir", 283: "Arakdo", 284: "Maskadra", 285: "Balignon", 286: "Chapignon", 287: "Parecool",
+  288: "Vigoroth", 289: "Monaflèmit", 290: "Ningale", 291: "Ninjask", 292: "Munja", 293: "Chuchmur",
+  294: "Ramboum", 295: "Brouhabam", 296: "Makuhita", 297: "Hariyama", 298: "Azurill", 299: "Tarinor",
+  300: "Skitty", 301: "Delcatty", 302: "Ténéfix", 303: "Mysdibule", 304: "Galekid", 305: "Galegon",
+  306: "Galeking", 307: "Méditikka", 308: "Charmina", 309: "Dynavolt", 310: "Élecsprint", 311: "Posipi",
+  312: "Négapi", 313: "Muciole", 314: "Lumivole", 315: "Rosélia", 316: "Gloupti", 317: "Avalout",
+  318: "Carvanha", 319: "Sharpedo", 320: "Wailmer", 321: "Wailord", 322: "Chamallot", 323: "Camerupt",
+  324: "Chartor", 325: "Spoink", 326: "Groret", 327: "Spinda", 328: "Kracknois", 329: "Vibraninf",
+  330: "Libegon", 331: "Cacnea", 332: "Cacturne", 333: "Tylton", 334: "Altaria", 335: "Mangriff",
+  336: "Séviper", 337: "Séléroc", 338: "Solaroc", 339: "Barloche", 340: "Barbicha", 341: "Écrapince",
+  342: "Colhomard", 343: "Balbuto", 344: "Kaorine", 345: "Lilia", 346: "Vacilys", 347: "Anorith",
+  348: "Armaldo", 349: "Barpau", 350: "Milobellus", 351: "Morphéo", 352: "Kecleon", 353: "Polichombr",
+  354: "Branette", 355: "Téraclope", 356: "Noctunoir", 357: "Absol", 358: "Éoko", 359: "Stalgamin",
+  360: "Okéoké", 361: "Oniglali", 362: "Stalgamin", 363: "Obalie", 364: "Phogleur", 365: "Kaimorse",
+  366: "Coquiperl", 367: "Serpang", 368: "Rosabyss", 369: "Relicanth", 370: "Lovdisc", 371: "Draby",
+  372: "Drackhaus", 373: "Drattak", 374: "Terhal", 375: "Métang", 376: "Métalosse", 377: "Regirock",
+  378: "Regice", 379: "Registeel", 380: "Latias", 381: "Latios", 382: "Kyogre", 383: "Groudon",
+  384: "Rayquaza", 385: "Jirachi", 386: "Deoxys",
+
+  // --- SINNOH (387 - 493) ---
+  387: "Tortipouss", 388: "Boskara", 389: "Torterra", 390: "Ouisticram", 391: "Chimpenfeu", 392: "Simiabraz",
+  393: "Tiplouf", 394: "Prinplouf", 395: "Pingoléon", 396: "Étourmi", 397: "Étourvol", 398: "Étouraptor",
+  399: "Keunotor", 400: "Castorno", 401: "Crikzik", 402: "Mélokrik", 403: "Lixy", 404: "Luxio",
+  405: "Luxray", 406: "Rozbouton", 407: "Roserade", 408: "Kraniados", 409: "Charkos", 410: "Dinoclier",
+  411: "Bastiodon", 412: "Cheniti", 413: "Cheniselle", 414: "Papilord", 415: "Apitrini", 416: "Apireine",
+  417: "Pachirisu", 418: "Mustébouée", 419: "Mustéflott", 420: "Ceribou", 421: "Ceriflor", 422: "Sanscoquille",
+  423: "Tritosor", 424: "Capidextre", 425: "Baudrive", 426: "Grodrive", 427: "Laporeille", 428: "Lockpin",
+  429: "Magiréve", 430: "Corboss", 431: "Chaglam", 432: "Chaffreux", 433: "Korillon", 434: "Moufouette",
+  435: "Moufflair", 436: "Archéomire", 437: "Archéodong", 438: "Manza", 439: "Mime Jr.", 440: "Ptiravi",
+  441: "Pijako", 442: "Spiritomb", 443: "Griknot", 444: "Carmache", 445: "Carchacrok", 446: "Goinfrex",
+  447: "Riolu", 448: "Lucario", 449: "Hippopotas", 450: "Hippodocus", 451: "Rapion", 452: "Drascore",
+  453: "Cradopaud", 454: "Coatox", 455: "Vortente", 456: "Écayon", 457: "Luminéon", 458: "Babimanta",
+  459: "Blizzi", 460: "Blizzaroi", 461: "Dimoret", 462: "Magnézone", 463: "Coudlangue", 464: "Rhinastoc",
+  465: "Bouldeneu", 466: "Élekable", 467: "Maganon", 468: "Togekiss", 469: "Yanmega", 470: "Phyllali",
+  471: "Givrali", 472: "Scorvol", 473: "Mammochon", 474: "Porygon-Z", 475: "Gallame", 476: "Tarinorme",
+  477: "Noctunoir", 478: "Momartik", 479: "Motisma", 480: "Créhelf", 481: "Créfollet", 482: "Créfadet",
+  483: "Dialga", 484: "Palkia", 485: "Heatran", 486: "Regigigas", 487: "Giratina", 488: "Cresselia",
+  489: "Phione", 490: "Manaphy", 491: "Darkrai", 492: "Shaymin", 493: "Arceus",
+
+  // --- UNYS (494 - 649) ---
+  494: "Victini", 495: "Vipélierre", 496: "Lianaja", 497: "Majaspic", 498: "Gruikui",
+  499: "Grotichon", 500: "Roitiflam", 501: "Moustillon", 502: "Mateloutre", 503: "Clamiral",
+  504: "Ratentif", 505: "Miradar", 506: "Ponchiot", 507: "Ponchien", 508: "Mastouffe",
+  509: "Chacripan", 510: "Léopardus", 511: "Feuillajou", 512: "Feuiloutan", 513: "Flamajou",
+  514: "Flamoutan", 515: "Flotajou", 516: "Flotoutan", 517: "Munna", 518: "Mushana", 519: "Poichigeon",
+  520: "Colombeau", 521: "Déflaisan", 522: "Zébibron", 523: "Zéblitz", 524: "Nodulithe", 525: "Géolithe",
+  526: "Gigalithe", 527: "Chovsouris", 528: "Rhinolove", 529: "Rototaupe", 530: "Minotaupe", 531: "Nanméouïe",
+  532: "Charpenti", 533: "Ouvrifier", 534: "Bétochef", 535: "Tritonde", 536: "Batracné", 537: "Crapustule",
+  538: "Judokrak", 539: "Karaclée", 540: "Larveyette", 541: "Couverdure", 542: "Manternel",
+  543: "Venipatte", 544: "Scobolide", 545: "Brutapode", 546: "Doudouvet", 547: "Farfaduvet",
+  548: "Chlorobulle", 549: "Fragilady", 550: "Bargantua", 551: "Mascaïman", 552: "Escroco",
+  553: "Crocorible", 554: "Darumarond", 555: "Darumacho", 556: "Maracachi", 557: "Crabicoque",
+  558: "Crabaraque", 559: "Baggiguane", 560: "Baggaïd", 561: "Cryptéro", 562: "Tutafeh",
+  563: "Tutankafer", 564: "Carapagos", 565: "Mégapagos", 566: "Arkéapti", 567: "Aéroptéryx",
+  568: "Miamiasme", 569: "Miasmax", 570: "Zorua", 571: "Zoroark", 572: "Chinchidou", 573: "Pashmilla",
+  574: "Scrutella", 575: "Mesmerella", 576: "Sidérella", 577: "Nucléos", 578: "Méios", 579: "Symbios",
+  580: "Couaneton", 581: "Lakmécygne", 582: "Sorbébé", 583: "Sorboul", 584: "Sorboubale", 585: "Vivaldaim",
+  586: "Haydaim", 587: "Émolga", 588: "Carabing", 589: "Lancargot", 590: "Trompignon", 591: "Gaulet",
+  592: "Viskuse", 593: "Moyade", 594: "Mamanbo", 595: "Statitik", 596: "Mygavolt", 597: "Grindur",
+  598: "Noacier", 599: "Tic", 600: "Clic", 601: "Clicclac", 602: "Anchwatt", 603: "Lampéroie",
+  604: "Ohmassacre", 605: "Lewsor", 606: "Neitram", 607: "Funécire", 608: "Mélancolux",
+  609: "Lugulabre", 610: "Coupenotte", 611: "Incisache", 612: "Tranchodon", 613: "Polarhume",
+  614: "Polagriffe", 615: "Hexagel", 616: "Escargaume", 617: "Limaspeed", 618: "Limonde", 619: "Kungfouine",
+  620: "Shaofouine", 621: "Drakkarmin", 622: "Gringolem", 623: "Golemastoc", 624: "Scalpion", 625: "Scalproie",
+  626: "Frison", 627: "Furaiglon", 628: "Guériaigle", 629: "Vostourno", 630: "Vaututrice", 631: "Aflamanoir", 632: "Fermite",
+  633: "Solochi", 634: "Diamat", 635: "Trioxhydre", 636: "Pyronille", 637: "Pyrax", 638: "Cobaltium", 639: "Terrakium",
+  640: "Viridium", 641: "Boréas", 642: "Fulguris", 643: "Reshiram", 644: "Zekrom", 645: "Démétéros", 646: "Kyurem",
+  647: "Keldeo", 648: "Meloetta", 649: "Genesect",
+
+  // --- KALOS (650 - 721) ---
+  650: "Marisson", 651: "Boguérisse", 652: "Blindépique", 653: "Feunnec", 654: "Roussil", 655: "Goupelin", 656: "Grenousse",
+  657: "Croâporal", 658: "Amphinobi", 659: "Sapereau", 660: "Excavarenne", 661: "Passerouge", 662: "Braisillon",
+  663: "Flambusard", 664: "Lépidonille", 665: "Pérégrain", 666: "Prismillon", 667: "Hélionceau", 668: "Némélios",
+  669: "Flabébé", 670: "Floette", 671: "Florges", 672: "Cabriolaine", 673: "Chevroum", 674: "Pandespiègle",
+  675: "Pandarbare", 676: "Couafarel", 677: "Psystigri", 678: "Mystigrix", 679: "Monorpale", 680: "Dimoclès",
+  681: "Exagide", 682: "Fluvetin", 683: "Cocotine", 684: "Sucroquin", 685: "Cupcanaille", 686: "Sépiatop", 687: "Sépiatroce",
+  688: "Opéraminer", 689: "Golgopathe", 690: "Venalgue", 691: "Kravarech", 692: "Flingouste", 693: "Gamblast",
+  694: "Galvaran", 695: "Iguolta", 696: "Ptyranidur", 697: "Rexillius", 698: "Amagara", 699: "Dragmara", 700: "Nymphali",
+  701: "Brutalibré", 702: "Dedenne", 703: "Strassie", 704: "Mucuscule", 705: "Colimucus", 706: "Muplodocus", 707: "Trousselin",
+  708: "Brocélôme", 709: "Desseliande", 710: "Pitrouille", 711: "Banshitrouye", 712: "Grelaçon", 713: "Séracrawl", 714: "Sonistrelle",
+  715: "Bruyverne", 716: "Xerneas", 717: "Yveltal", 718: "Zygarde", 719: "Diancie", 720: "Hoopa", 721: "Volcanion",
+
+  // --- ALOLA (722 - 809) ---
+  722: "Brindibou", 723: "Efflèche", 724: "Archéduc", 725: "Flamiaou", 726: "Matoufeu", 727: "Félinferno", 728: "Otaquin",
+  729: "Otarlette", 730: "Oratoria", 731: "Pikipek", 732: "Piclairon", 733: "Bazoucan", 734: "Manglouton", 735: "Argouste",
+  736: "Larvibule", 737: "Chrysapile", 738: "Lucanon", 739: "Crabagarre", 740: "Crabominable", 741: "Plumeline", 742: "Bombydou",
+  743: "Rubombelle", 744: "Rocabot", 745: "Lougaroc", 746: "Froussardine", 747: "Voreaster", 748: "Prédastérie", 749: "Tiboudet",
+  750: "Bourrinos", 751: "Araqua", 752: "Tarenbulle", 753: "Mimantis", 754: "Floramantis", 755: "Spododo", 756: "Lampignon",
+  757: "Tritox", 758: "Malamandre", 759: "Nounourson", 760: "Chelours", 761: "Croquine", 762: "Candine", 763: "Sucreine",
+  764: "Guérilande", 765: "Gouroutan", 766: "Quartermac", 767: "Sovkipou", 768: "Sarmuraï", 769: "Bacabouh", 770: "Trépassable",
+  771: "Concombaffe", 772: "Type:0", 773: "Silvallié", 774: "Météeno", 775: "Dodoala", 776: "Boumata", 777: "Togedemaru",
+  778: "Mimiqui", 779: "Denticrisse", 780: "Draïeul", 781: "Sinistrail", 782: "Bébécaille", 783: "Écaïd", 784: "Ékaïser",
+  785: "Tokorico", 786: "Tokopiyon", 787: "Tokotoro", 788: "Tokopisco", 789: "Cosmog", 790: "Cosmovum", 791: "Solgaleo",
+  792: "Lunala", 793: "Zéroïd", 794: "Mouscoto", 795: "Cancrelove", 796: "Câblifère", 797: "Bamboiselle", 798: "Katagami",
+  799: "Engloutyran", 800: "Necrozma", 801: "Magearna", 802: "Marshadow", 803: "Vémini", 804: "Mandrillon", 805: "Pierroteknik",
+  806: "Ama-Ama", 807: "Zeraora", 808: "Meltan", 809: "Melmetal",
+
+  // --- GALAR / HISUI (810 - 905) ---
+  810: "Ouistempo", 811: "Badabouin", 812: "Gorythmic", 813: "Flambino", 814: "Lapyro", 815: "Pyrobut", 816: "Larméléon",
+  817: "Arrozard", 818: "Lézargus", 819: "Rongourmand", 820: "Rongrigou", 821: "Minisange", 822: "Bleuseille",
+  823: "Corvaillus", 824: "Larvadar", 825: "Coléodôme", 826: "Astronelle", 827: "Goupilou", 828: "Roublenard",
+  829: "Tournicoton", 830: "Blancoton", 831: "Moumouton", 832: "Moumouflon", 833: "Khélocrok", 834: "Torgamord", 835: "Voltoutou",
+  836: "Fulgudog", 837: "Charbi", 838: "Wagonmine", 839: "Monthracite", 840: "Verpom", 841: "Pomdrapi", 842: "Dratatin",
+  843: "Silicobra", 844: "Sandakor", 845: "Nigosier", 846: "Embrochet", 847: "Hastacuda", 848: "Toxizap", 849: "Salarsen",
+  850: "Grillepattes", 851: "Scolocendre", 852: "Poulpaf", 853: "Krakos", 854: "Théffroi", 855: "Polthégeist",
+  856: "Bibichut", 857: "Chapeautite", 858: "Sorcilence", 859: "Grimalin", 860: "Fourbelin", 861: "Angoliath",
+  862: "Ixon", 863: "Berserkatt", 864: "Beldeneige", 865: "Palarticho", 866: "M. Glaquette",
+  867: "Tutétékri", 868: "Crémy", 869: "Charmilly", 870: "Hexadron", 871: "Wattapik", 872: "Frissonille",
+  873: "Dolman", 874: "Bekaglaçon", 875: "Wimessir", 876: "Morpeko", 877: "Charibari", 878: "Pachyradjah", 879: "Pachyradjah",
+  880: "Galvagon", 881: "Galvagla", 882: "Hydragon", 883: "Hydragla", 884: "Duralugon",
+  885: "Fantyrm", 886: "Dispareptil", 887: "Lanssorien", 888: "Zacian", 889: "Zamazenta", 890: "Éternatos", 891: "Wushours",
+  892: "Shifours", 893: "Zarude", 894: "Regieleki", 895: "Regidrago", 896: "Blizzeval", 897: "Spectreval",
+  898: "Sylveroy", 899: "Cerbyllin", 900: "Hachécateur", 901: "Ursaking", 902: "Paragruel", 903: "Farfurex",
+  904: "Qwilpik", 905: "Amovénus",
+
+
+// --- PALDEA (906 - 1014+) ---
+  906: "Poussacha", 907: "Matourgeon", 908: "Miascarade", 909: "Chochodile", 910: "Crocogril", 911: "Flâmigator",
+  912: "Coiffeton", 913: "Canarbello", 914: "Palmaval", 915: "Gourmelet", 916: "Fragroin", 917: "Tissenboule",
+  918: "Filentrappe", 919: "Enboulon", 920: "Exagril", 921: "Pohm", 922: "Pohmotte", 923: "Pohmarmotte",
+  924: "Compagnol", 925: "Famignol", 926: "Pataugriffe", 927: "Dogrino", 928: "Olivini", 929: "Olivado",
+  930: "Arboliva", 931: "Tapatoès", 932: "Selentin", 933: "Amassel", 934: "Gigansel", 935: "Charbambin",
+  936: "Carmadura", 937: "Malvalame", 938: "Têtampoule", 939: "Ampibidou", 940: "Zapétrel", 941: "Fulgulairo",
+  942: "Grondogue", 943: "Dogrino", 944: "Tag-Tag", 945: "Gribouraigne", 946: "Virovent", 947: "Virevorreur",
+  948: "Terracool", 949: "Terracruel", 950: "Craparoi", 951: "Pimito", 952: "Scovillain", 953: "Léboulérou",
+  954: "Bérasca", 955: "Flotillon", 956: "Cléopsytra", 957: "Forgerette", 958: "Forgella", 959: "Forgelina",
+  960: "Taupikeau", 961: "Triopikeau", 962: "Vrombi", 963: "Vrombotor", 964: "Motorizard", 965: "Toutombe",
+  966: "Tomberro", 967: "Flamenroule", 968: "Piétasol", 969: "Dondoko", 970: "Oyacata", 971: "Courrousinge",
+  972: "Terraiste", 973: "Glaivodo", 974: "Mordudor", 975: "Gromago", 976: "Chongjian", 977: "Baojian",
+  978: "Dinglu", 979: "Yuyu", 980: "Arpente-Sol", 981: "Hurle-Queue", 982: "Fongus-Furie", 983: "Flotte-Mèche",
+  984: "Rampe-Aile", 985: "Pennage-Sable", 986: "Roue-de-Fer", 987: "Motte-de-Fer", 988: "Paume-de-Fer",
+  989: "Tête-de-Fer", 990: "Hache-de-Fer", 991: "Épine-de-Fer", 992: "Frigodo", 993: "Cryodo",
+  994: "Rugit-Lune", 995: "Garde-de-Fer", 996: "Koraidon", 997: "Miraidon", 998: "Serpente-Eau",
+  999: "Vert-de-Fer", 1000: "Gromago", 1001: "Pomdramour", 1002: "Poltchageist", 1003: "Théffroyable",
+  1004: "Félicanis", 1005: "Fortusimia", 1006: "Favianos", 1007: "Ogerpon", 1008: "Pondralugon",
+  1009: "Pomdorochi", 1010: "Feu-Perçant", 1011: "Ire-Foudre", 1012: "Roc-de-Fer", 1013: "Chef-de-Fer",
+  1014: "Terapagos"
+
+
             };
             pokedexTraduction = { ...pokedexTraduction, ...backupFr };
         }
@@ -110,6 +278,7 @@ async function chargerDonnees() {
 }
 
 // 3. RECUPERER UN POKÉMON (RECHERCHE ACCENTS COMPATIBLE)
+// --- FONCTION DE RECHERCHE PRINCIPALE (ACCEPTE NUMÉROS ET NOMS FRANÇAIS) ---
 async function getPokemon() {
     const input = document.getElementById('pokemonInput');
     const typesContainer = document.getElementById('pokemonTypes');
@@ -117,72 +286,83 @@ async function getPokemon() {
     const pokemonNumberDisplay = document.getElementById('pokemonNumber');
     const statsContainer = document.getElementById('pokemonStats');
 
-    // Nettoyage complet de la saisie (sans espaces, sans accents)
-    let searchValue = input.value.toLowerCase().trim()
-        .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-        .replace(/[^a-z0-9]/g, ""); 
+    // 1. On récupère la saisie brute de l'utilisateur ou du dé
+    let rawSearch = input.value.trim();
+    if (!rawSearch) return; 
+
+    // 2. Nettoyage de sécurité pour l'API textuelle
+    let searchValue = rawSearch.toLowerCase()
+        .normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     
-    if (!searchValue) return; 
-    
+    // Nettoyage strict sans caractères spéciaux uniquement pour tester si c'est une clé dico
+    let cleanDicoKey = searchValue.replace(/[^a-z0-9]/g, "");
+
     typesContainer.innerHTML = ''; 
     if (statsContainer) statsContainer.innerHTML = ''; 
 
     try {
         let id = null;
         
-        // 1. Si c'est un nombre
-        if (!isNaN(searchValue) && searchValue !== "") {
-            id = parseInt(searchValue);
+        // A. Si c'est un nombre (généré par le dé ou tapé par l'enfant)
+        if (!isNaN(rawSearch) && rawSearch !== "") {
+            id = parseInt(rawSearch);
         } 
-        // 2. Si le nom est dans notre dictionnaire de traduction automatique
-        else if (pokedexTraduction[searchValue]) {
-            id = pokedexTraduction[searchValue];
+        // B. Si le nom est trouvé dans ton dictionnaire local de traduction
+        else if (typeof pokedexTraduction !== 'undefined' && pokedexTraduction[cleanDicoKey]) {
+            id = pokedexTraduction[cleanDicoKey];
         } 
-        // 3. Système de secours directement auprès de l'API s'il n'est pas dans le dico
+        // C. Traduction automatique en direct via l'API Species
         else {
             try {
-                const speciesRes = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${searchValue}`);
+                const speciesRes = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${cleanDicoKey}`);
                 if (speciesRes.ok) {
                     const speciesData = await speciesRes.json();
                     id = speciesData.id;
                 }
-            } catch (e) { id = null; }
+            } catch (e) { 
+                id = null; 
+            }
         }
 
-        // Sécurité des limites de l'API
+        // Vérification des limites du Pokédex (1 à 1025)
         if (!id || id < 1 || id > 1025) {
+            // RETOUR AU DESIGN EXACT DE TON ALERTE D'ORIGINE
             showPokemonAlert("Pokémon non trouvé ! Essaie un autre nom ou son numéro.");
+            input.value = "";
             return;
         }
 
+        // 3. Récupération de la fiche complète du Pokémon via son ID valide
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
         const data = await response.json();
 
-        // Sécurité Quiz
-        pokemonImage.classList.remove('silhouette'); 
+        // Réinitialisation des silhouettes du Quiz
+        if (pokemonImage) pokemonImage.classList.remove('silhouette'); 
         const revealBtn = document.getElementById('revealBtn');
         if (revealBtn) revealBtn.classList.add('hidden');
 
-        // Changement automatique de l'onglet de région si nécessaire
+        // Changement automatique de la région sélectionnée si nécessaire
         const regionSelect = document.getElementById('regionSelect');
-        const rangeSelect = regionSelect.value.split('-').map(Number);
-        if (id < rangeSelect[0] || id > rangeSelect[1]) {
-            for (let opt of regionSelect.options) {
-                const [s, e] = opt.value.split('-').map(Number);
-                if (id >= s && id <= e) {
-                    regionSelect.value = opt.value;
-                    initPokedex(); 
-                    break;
+        if (regionSelect && regionSelect.value) {
+            const rangeSelect = regionSelect.value.split('-').map(Number);
+            if (id < rangeSelect[0] || id > rangeSelect[1]) {
+                for (let opt of regionSelect.options) {
+                    const [s, e] = opt.value.split('-').map(Number);
+                    if (id >= s && id <= e) {
+                        regionSelect.value = opt.value;
+                        if (typeof initPokedex === 'function') initPokedex(); 
+                        break;
+                    }
                 }
             }
         }
 
-        // Traduction du nom en français depuis l'API
+        // 4. Traduction du nom en français depuis l'API pour l'affichage final
         const speciesResFinal = await fetch(data.species.url);
         const speciesDataFinal = await speciesResFinal.json();
         const frenchName = speciesDataFinal.names.find(n => n.language.name === "fr")?.name || data.name;
 
-        // Détermination du nom de la région
+        // Détermination de la région
         const nomsRegions = {
             "1-151": "Kanto", "152-251": "Johto", "252-386": "Hoenn",
             "387-493": "Sinnoh", "494-649": "Unys", "650-721": "Kalos",
@@ -194,20 +374,25 @@ async function getPokemon() {
             if (id >= start && id <= end) { regionNom = nomsRegions[key]; break; }
         }
 
-        // Injection des données dans la fiche
-        pokemonImage.src = data.sprites.other['official-artwork'].front_default;
-        document.getElementById('pokemonName').innerText = frenchName.toUpperCase();
-        pokemonNumberDisplay.innerHTML = `N° ${id} — <strong>Région de ${regionNom}</strong>`;
+        // Remplissage de l'interface
+        if (pokemonImage) pokemonImage.src = data.sprites.other['official-artwork'].front_default;
+        
+        const pokemonNameElement = document.getElementById('pokemonName');
+        if (pokemonNameElement) pokemonNameElement.innerText = frenchName.toUpperCase();
+        
+        if (pokemonNumberDisplay) {
+            pokemonNumberDisplay.innerHTML = `N° ${id} — <strong>Région de ${regionNom}</strong>`;
+        }
 
-        // Badges des types
+        // Affichage des types
         data.types.forEach(t => {
             const badge = document.createElement('span');
             badge.className = `type-badge type-${t.type.name}`;
-            badge.innerText = dicoTypes[t.type.name] || t.type.name.toUpperCase();
+            badge.innerText = (typeof dicoTypes !== 'undefined' && dicoTypes[t.type.name]) ? dicoTypes[t.type.name] : t.type.name.toUpperCase();
             typesContainer.appendChild(badge);
         });
 
-        // Barres de statistiques
+        // Affichage des statistiques
         if (statsContainer) {
             const statsTraductions = {'hp':'PV','attack':'ATQ','defense':'DEF','special-attack':'ATQ.SP','special-defense':'DEF.SP','speed':'VIT'};
             data.stats.forEach(s => {
@@ -219,10 +404,18 @@ async function getPokemon() {
             });
         }
 
-        document.getElementById('pokemonCard').classList.remove('hidden');
-        updateGrid(id, data.sprites.front_default, frenchName);
+        const pokemonCard = document.getElementById('pokemonCard');
+        if (pokemonCard) pokemonCard.classList.remove('hidden');
+        
+        if (typeof updateGrid === 'function') {
+            updateGrid(id, data.sprites.front_default, frenchName);
+        }
 
-    } catch (error) { console.error(error); }
+    } catch (error) { 
+        console.error(error); 
+    }
+    
+    // On vide le champ texte pour la saisie suivante
     input.value = "";
 }
 
@@ -423,7 +616,20 @@ document.getElementById('resetBtn').addEventListener('click', () => {
     });
 });
 
-function getRandomPokemon() { document.getElementById('pokemonInput').value = Math.floor(Math.random() * 1025) + 1; getPokemon(); }
+// --- FONCTION CORRECTE POUR LE BOUTON DÉ (ALÉATOIRE) ---
+function getRandomPokemon() {
+    const input = document.getElementById('pokemonInput');
+    if (!input) return;
+
+    // Génère un numéro aléatoire valide entre 1 et 1025
+    const randomId = Math.floor(Math.random() * 1025) + 1;
+    
+    // Injecte la valeur dans l'input pour que getPokemon() la lise comme un nombre
+    input.value = randomId;
+    
+    // Déclenche la recherche immédiatement
+    getPokemon();
+}
 
 // QUIZ CORRIGÉ
 document.getElementById('quizBtn').addEventListener('click', async function() {
