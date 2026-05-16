@@ -279,6 +279,7 @@ const backupFr = {
 
 // 3. RECUPERER UN POKÉMON (RECHERCHE ACCENTS COMPATIBLE)
 // --- FONCTION DE RECHERCHE PRINCIPALE (ACCEPTE NUMÉROS ET NOMS FRANÇAIS) ---
+
 async function getPokemon() {
     const input = document.getElementById('pokemonInput');
     const typesContainer = document.getElementById('pokemonTypes');
@@ -290,15 +291,15 @@ async function getPokemon() {
     let rawSearch = input.value.trim();
     if (!rawSearch) return; 
 
-    // 2. Nettoyage de sécurité pour l'API textuelle
+    // 2. Nettoyage de base : tout en minuscules et retrait des accents
     let searchValue = rawSearch.toLowerCase()
         .normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     
-    // Nettoyage strict sans caractères spéciaux uniquement pour tester si c'est une clé dico
-    let cleanDicoKey = searchValue.replace(/[^a-z0-9]/g, "");
+    // Pour l'API : On remplace les espaces par des tirets (ex: "m mime" devient "m-mime")
+    let apiSearchValue = searchValue.replace(/\s+/g, "-");
 
-    typesContainer.innerHTML = ''; 
-    if (statsContainer) statsContainer.innerHTML = ''; 
+    // Pour ton dictionnaire local : Nettoyage strict sans caractères spéciaux
+    let cleanDicoKey = searchValue.replace(/[^a-z0-9]/g, "");
 
     try {
         let id = null;
@@ -311,10 +312,10 @@ async function getPokemon() {
         else if (typeof pokedexTraduction !== 'undefined' && pokedexTraduction[cleanDicoKey]) {
             id = pokedexTraduction[cleanDicoKey];
         } 
-        // C. Traduction automatique en direct via l'API Species
+        // C. Traduction automatique en direct via l'API Species (Utilise apiSearchValue)
         else {
             try {
-                const speciesRes = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${cleanDicoKey}`);
+                const speciesRes = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${apiSearchValue}`);
                 if (speciesRes.ok) {
                     const speciesData = await speciesRes.json();
                     id = speciesData.id;
@@ -326,7 +327,6 @@ async function getPokemon() {
 
         // Vérification des limites du Pokédex (1 à 1025)
         if (!id || id < 1 || id > 1025) {
-            // RETOUR AU DESIGN EXACT DE TON ALERTE D'ORIGINE
             showPokemonAlert("Pokémon non trouvé ! Essaie un autre nom ou son numéro.");
             input.value = "";
             return;
@@ -384,16 +384,20 @@ async function getPokemon() {
             pokemonNumberDisplay.innerHTML = `N° ${id} — <strong>Région de ${regionNom}</strong>`;
         }
 
-        // Affichage des types
-        data.types.forEach(t => {
-            const badge = document.createElement('span');
-            badge.className = `type-badge type-${t.type.name}`;
-            badge.innerText = (typeof dicoTypes !== 'undefined' && dicoTypes[t.type.name]) ? dicoTypes[t.type.name] : t.type.name.toUpperCase();
-            typesContainer.appendChild(badge);
-        });
+        // Nettoyage et affichage des types (Au dernier moment pour éviter le doublon)
+        if (typesContainer) {
+            typesContainer.innerHTML = ''; 
+            data.types.forEach(t => {
+                const badge = document.createElement('span');
+                badge.className = `type-badge type-${t.type.name}`;
+                badge.innerText = (typeof dicoTypes !== 'undefined' && dicoTypes[t.type.name]) ? dicoTypes[t.type.name] : t.type.name.toUpperCase();
+                typesContainer.appendChild(badge);
+            });
+        }
 
-        // Affichage des statistiques
+        // Nettoyage et affichage des statistiques (Au dernier moment pour éviter le doublon)
         if (statsContainer) {
+            statsContainer.innerHTML = ''; 
             const statsTraductions = {'hp':'PV','attack':'ATQ','defense':'DEF','special-attack':'ATQ.SP','special-defense':'DEF.SP','speed':'VIT'};
             data.stats.forEach(s => {
                 const percent = Math.min((s.base_stat / 150) * 100, 100);
@@ -407,6 +411,7 @@ async function getPokemon() {
         const pokemonCard = document.getElementById('pokemonCard');
         if (pokemonCard) pokemonCard.classList.remove('hidden');
         
+        // Ajout au Pokédex et déclenchement des confettis via ta fonction updateGrid
         if (typeof updateGrid === 'function') {
             updateGrid(id, data.sprites.front_default, frenchName);
         }
@@ -421,12 +426,17 @@ async function getPokemon() {
 
 // 4. GRILLE ET PROGRESSION (FIXED)
 function updateGrid(id, spriteUrl, name) {
+    const range = document.getElementById('regionSelect').value;
     let regionKey = "";
     for (let key in progressionParRegion) {
         const [start, end] = key.split('-').map(Number);
         if (id >= start && id <= end) { regionKey = key; break; }
     }
 
+    if (progressionParRegion[range] && !progressionParRegion[range].has(id)) {
+        progressionParRegion[range].add(id); // On l'ajoute
+        lancerConfettis(); // 🏁 On lance les confettis UNIQUEMENT si c'est un nouveau !
+}
     const targetSlot = document.getElementById(`slot-${id}`);
     if (targetSlot) {
         if (!progressionParRegion[regionKey].has(id)) {

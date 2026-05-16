@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Paytone+One&display=swap');
+
 /* =========================================================================
    1. STRUCTURE GLOBALE & BASE (Ordinateur et Mobile)
    ========================================================================= */
@@ -838,4 +840,74 @@ button:active {
     box-sizing: border-box !important;
     font-size: 1.1rem !important;
     padding: 12px !important;
+}
+
+/* Animation de chute des confettis */
+@keyframes fall {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(105vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* =========================================================================
+   9. RESPONSIVE DESIGN (Adaptation Smartphones)
+   ========================================================================= */
+@media (max-width: 850px) {
+    /* Le titre s'adapte en taille */
+    .main-subtitle {
+        font-size: 2.5rem;
+        padding: 0 20px;
+    }
+    
+    .main-subtitle::before, .main-subtitle::after {
+        font-size: 1.8rem;
+    }
+
+    /* Le layout passe en colonne (le Pokédex passe sous le moteur de recherche) */
+    .main-layout {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+    }
+
+    /* Le cadre de gauche prend toute la largeur du mobile */
+    .container {
+        width: 100%;
+        max-width: 100%;
+        padding: 20px 15px;
+    }
+
+    /* Le bloc de droite s'adapte aussi */
+    .grid-container {
+        width: 100%;
+        margin-right: 0;
+        padding: 20px 15px;
+        max-height: 450px; /* Un poil plus court sur mobile pour éviter trop de défilement */
+    }
+
+    /* On réduit légèrement la taille des images d'en-tête pour les petits écrans */
+    .side-pokemon {
+        width: 60px;
+    }
+    .logo-main {
+        width: 130px;
+    }
+    
+    /* Ajustement des blocs de statistiques et captures récentes */
+    .stats-wrapper {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .stats-container {
+        min-width: 100%;
+    }
 }
