@@ -230,12 +230,12 @@ const backupFr = {
   823: "Corvaillus", 824: "Larvadar", 825: "Coléodôme", 826: "Astronelle", 827: "Goupilou", 828: "Roublenard",
   829: "Tournicoton", 830: "Blancoton", 831: "Moumouton", 832: "Moumouflon", 833: "Khélocrok", 834: "Torgamord", 835: "Voltoutou",
   836: "Fulgudog", 837: "Charbi", 838: "Wagonmine", 839: "Monthracite", 840: "Verpom", 841: "Pomdrapi", 842: "Dratatin",
-  843: "Silicobra", 844: "Sandakor", 845: "Nigosier", 846: "Embrochet", 847: "Hastacuda", 848: "Toxizap", 849: "Salarsen",
+  843: "DUNAJA", 844: "DUNACONDA", 845: "Nigosier", 846: "Embrochet", 847: "Hastacuda", 848: "Toxizap", 849: "Salarsen",
   850: "Grillepattes", 851: "Scolocendre", 852: "Poulpaf", 853: "Krakos", 854: "Théffroi", 855: "Polthégeist",
-  856: "Bibichut", 857: "Chapeautite", 858: "Sorcilence", 859: "Grimalin", 860: "Fourbelin", 861: "Angoliath",
-  862: "Ixon", 863: "Berserkatt", 864: "Beldeneige", 865: "Palarticho", 866: "M. Glaquette",
+  856: "Bibichut", 857: "CHAPOTUS", 858: "Sorcilence", 859: "Grimalin", 860: "Fourbelin", 861: "Angoliath",
+  862: "Ixon", 863: "Berserkatt", 864: "CORAYÔME", 865: "Palarticho", 866: "M. Glaquette",
   867: "Tutétékri", 868: "Crémy", 869: "Charmilly", 870: "Hexadron", 871: "Wattapik", 872: "Frissonille",
-  873: "Dolman", 874: "Bekaglaçon", 875: "Wimessir", 876: "Morpeko", 877: "Charibari", 878: "Pachyradjah", 879: "Pachyradjah",
+  873: "BELDENEIGE", 874: "DOLMAN", 875: "BEKAGLAÇON", 876: "WIMESSIR", 877: "MORPEKO", 878: "CHARIBARI", 879: "Pachyradjah",
   880: "Galvagon", 881: "Galvagla", 882: "Hydragon", 883: "Hydragla", 884: "Duralugon",
   885: "Fantyrm", 886: "Dispareptil", 887: "Lanssorien", 888: "Zacian", 889: "Zamazenta", 890: "Éternatos", 891: "Wushours",
   892: "Shifours", 893: "Zarude", 894: "Regieleki", 895: "Regidrago", 896: "Blizzeval", 897: "Spectreval",
@@ -492,13 +492,14 @@ function initPokedex() {
         slot.className = 'pokemon-slot';
         slot.id = `slot-${i}`;
         
-        if (progressionParRegion[range] && progressionParRegion[range].has(i)) {
-            slot.innerHTML = `<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${i}.png" alt="Pokemon ${i}">`;
-            slot.style.backgroundColor = "white";
-            slot.style.border = "1px solid #3b4cca";
-        } else {
-            slot.innerText = i;
-        }
+// Remplacer l'ancienne condition par celle-ci dans la boucle de initPokedex :
+if (progressionParRegion[range] && progressionParRegion[range].has(i)) {
+    slot.innerHTML = `<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${i}.png" alt="Pokemon ${i}">`;
+    slot.style.backgroundColor = "white";
+    slot.style.border = "1px solid #3b4cca";
+} else {
+    slot.innerText = i;
+}
 
         slot.addEventListener('click', () => {
             const arena = document.getElementById('battleArena');
@@ -640,7 +641,7 @@ document.getElementById('quizBtn').addEventListener('click', async function() {
     const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${currentQuizId}`);
     const data = await response.json();
     const pokemonImage = document.getElementById('pokemonImage');
-    pokemonImage.src = data.sprites.other['official-artwork'].front_default;
+    src = data.sprites.other['official-artwork'].front_default;
     pokemonImage.classList.add('silhouette');
     document.getElementById('pokemonName').innerText = "???"; 
     document.getElementById('pokemonCard').classList.remove('hidden');
@@ -796,8 +797,12 @@ async function lancerDuel(playerId) {
             });
         });
 
-        const forceJoueur = playerData.stats[1].base_stat + (avantage * 25);
-        const defenseAdversaire = opponentData.stats[2].base_stat;
+// À remplacer à l'intérieur de la fonction lancerDuel(playerId) :
+const playerAttackStat = playerData.stats.find(s => s.stat.name === 'attack')?.base_stat || 50;
+const opponentDefenseStat = opponentData.stats.find(s => s.stat.name === 'defense')?.base_stat || 50;
+
+const forceJoueur = playerAttackStat + (avantage * 25);
+const defenseAdversaire = opponentDefenseStat;
         const log = document.getElementById('battleLog');
         
         let explicationType = "";
@@ -830,5 +835,54 @@ if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('./sw.js')
             .then(reg => console.log('Service Worker enregistré avec succès !', reg.scope))
             .catch(err => console.error('Échec de l\'enregistrement du Service Worker :', err));
+    });
+}
+
+// ... (Toutes tes fonctions comme getPokemon, initPokedex, etc. sont au-dessus)
+
+// ==========================================
+// ZONE DES ÉCOUTEURS D'ÉVÉNEMENTS (TOUT EN BAS)
+// ==========================================
+
+// Écouteur pour lancer le quiz
+const quizBtn = document.getElementById('quizBtn');
+if (quizBtn) {
+    quizBtn.addEventListener('click', async function() {
+        document.getElementById('pokemonTypes').innerHTML = '';
+        document.getElementById('pokemonNumber').innerText = '';
+        document.getElementById('pokemonStats').innerHTML = '';
+        currentQuizId = Math.floor(Math.random() * 1025) + 1;
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${currentQuizId}`);
+        const data = await response.json();
+        const pokemonImage = document.getElementById('pokemonImage');
+        if (pokemonImage) {
+            pokemonImage.src = data.sprites.other['official-artwork'].front_default;
+            pokemonImage.classList.add('silhouette');
+        }
+        document.getElementById('pokemonName').innerText = "???"; 
+        document.getElementById('pokemonCard').classList.remove('hidden');
+        document.getElementById('revealBtn').classList.remove('hidden');
+    });
+}
+
+// 🟢 METS LE BLOC CORRECTIF JUSTE ICI :
+const revealBtn = document.getElementById('revealBtn');
+if (revealBtn) {
+    revealBtn.addEventListener('click', async function() {
+        if (!currentQuizId) return;
+        const res = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${currentQuizId}`);
+        const data = await res.json();
+        const frenchName = data.names.find(n => n.language.name === "fr")?.name || data.name;
+        
+        // Supprime la silhouette noire immédiatement
+        const pokemonImage = document.getElementById('pokemonImage');
+        if (pokemonImage) pokemonImage.classList.remove('silhouette'); 
+        
+        // Remplit le champ et appelle ta fonction actuelle
+        document.getElementById('pokemonInput').value = currentQuizId; 
+        await getPokemon();
+        
+        // Affiche la modale personnalisée
+        showPokemonAlert(`C'était ${frenchName} !`);
     });
 }
