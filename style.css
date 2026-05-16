@@ -792,16 +792,7 @@ button:active {
     100% { transform: scale(1); opacity: 1; }
 }
 
-.confetti {
-    position: fixed;
-    width: 10px;
-    height: 10px;
-    top: -20px;
-    z-index: 9999;
-    pointer-events: none;
-    border-radius: 2px;
-    animation: fall linear forwards;
-}
+
 
 /* --- ADAPTATION DES BOUTONS DANS LE CADRE --- */
 
@@ -842,20 +833,6 @@ button:active {
     padding: 12px !important;
 }
 
-/* Animation de chute des confettis */
-@keyframes fall {
-    0% {
-        transform: translateY(0) rotate(0deg);
-        opacity: 1;
-    }
-    90% {
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(105vh) rotate(720deg);
-        opacity: 0;
-    }
-}
 
 /* =========================================================================
    9. RESPONSIVE DESIGN (Adaptation Smartphones)
@@ -912,26 +889,30 @@ button:active {
     }
 }
 
-/* --- STYLES POUR LES CONFETTIS --- */
+/* =========================================================================
+   10. SYSTEME DE CONFETTIS (Nettoyé pour GitHub Pages)
+   ========================================================================= */
 .confetti {
-    position: fixed; /* Reste visible même si on défile */
+    position: fixed;
     width: 10px;
     height: 16px;
-    top: -20px; /* Démarre juste au-dessus de l'écran */
-    z-index: 9999; /* Passe par-dessus absolument tout */
+    top: -20px;
+    z-index: 99999; /* Augmenté pour être certain de passer devant les modales */
+    pointer-events: none;
     border-radius: 2px;
-    pointer-events: none; /* Empêche de bloquer les clics de l'utilisateur */
     animation: chuteConfetti linear forwards;
 }
 
-/* L'animation qui fait tomber et tourner les confettis */
 @keyframes chuteConfetti {
     0% {
         transform: translateY(0) rotate(0deg);
         opacity: 1;
     }
+    90% {
+        opacity: 1;
+    }
     100% {
-        transform: translateY(105vh) rotate(720deg); /* Tombe plus bas que le bas de l'écran */
+        transform: translateY(105vh) rotate(720deg);
         opacity: 0;
     }
 }
