@@ -1,0 +1,17 @@
+{
+  "name": "Mon Pokédex Interactif",
+  "short_name": "Pokédex",
+  "description": "Attrape les 1025 Pokémon et combat tes amis !",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#3b4cca",
+  "theme_color": "#ff0000",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    }
+  ]
+}

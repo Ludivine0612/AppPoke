@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+
+<!-- Optimisation de l'affichage et du zoom tactile pour les téléphones -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Pokédex Rigolo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Paytone+One&display=swap" rel="stylesheet">  
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+        <!-- Liaison du Manifest pour le téléchargement -->
+<link rel="manifest" href="manifest.json">
+</head>
+
+<body>
+
+<div class="header-content">
+    <div class="logo-wrapper">
+        <img src="bulbizarre.png" alt="Bulbizarre" class="side-pokemon">
+        <img src="pokemon-logo.png" alt="Logo Pokémon" class="logo-main">
+        <img src="ectoplasma.png" alt="Ectoplasma" class="side-pokemon">
+    </div>
+    
+    <h2 class="main-subtitle" id="bouncing-title">
+        <span>D</span><span>é</span><span>c</span><span>o</span><span>u</span><span>v</span><span>r</span><span>e</span> 
+        <span>t</span><span>o</span><span>u</span><span>s</span>  
+        <span>l</span><span>e</span><span>s</span>  
+        <span>P</span><span>o</span><span>k</span><span>é</span><span>m</span><span>o</span><span>n</span><span>s</span>
+    </h2>
+</div>
+
+<div class="main-layout">
+    <div class="container">
+        <div class="evolution-header">
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/4.gif" alt="Salamèche">
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/5.gif" alt="Reptincel">
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/6.gif" alt="Dracaufeu">
+        </div>
+        <h1>Attrape-les tous !</h1>
+        <p>Choisis un nombre entre 1 et 1025 ou tape un nom :</p>
+        <div class="search-box">
+            <input type="text" id="pokemonInput" placeholder=" ">
+            <button onclick="getPokemon()">Découvrir !</button>
+            <button onclick="getRandomPokemon()" class="random-button" title="Pokémon Aléatoire">🎲</button>
+            <button id="quizBtn" class="quiz-button">QUIZ : C'est qui ?</button>
+        </div>
+
+        <button id="revealBtn" class="quiz-button hidden" style="
+    background-color: #ffde00; 
+    color: #3b4cca; 
+    margin-bottom: 20px; /* Crée l'espace avec le bouton du bas */
+    width: 100%; 
+    padding: 15px; 
+    border-radius: 15px; 
+    font-family: 'Luckiest Guy'; 
+    font-size: 1.4rem; /* Écrit beaucoup plus grand */
+    border: none; 
+    box-shadow: 0 4px 0 #d4ac0d;
+    cursor: pointer;
+">
+    DONNER MA LANGUE AU MIAOUSS
+</button>
+
+<button onclick="preparerCombat()" style="
+    background: #4cd137; 
+    border: none; 
+    padding: 0 40px; 
+    height: 65px; 
+    border-radius: 50px; 
+    color: white; 
+    font-family: 'Luckiest Guy'; 
+    font-size: 1.4rem; 
+    box-shadow: 0 6px 0 #3b9e2a; 
+    display: flex; /* Flex pour bien aligner les épées */
+    align-items: center; 
+    justify-content: center; 
+    gap: 15px; 
+    width: 100%; 
+    cursor: pointer;
+">
+    <span>⚔️</span> 
+    <span style="position: relative; top: 2px;">MODE DUEL</span>
+    <span>⚔️</span>
+</button>
+        
+
+
+        <div id="pokemonCard" class="card hidden">
+            <h2 id="pokemonName"></h2>
+            <div class="image-container">
+                <img id="pokemonImage" src="" alt="Image du Pokemon">
+            </div>
+            <div id="pokemonTypes" class="types-container"></div>
+            <p id="pokemonNumber"></p>
+            <div id="pokemonStats" class="stats-bars-container"></div>
+        </div>
+    </div>
+
+    <div class="grid-container">
+        <div class="region-menu">
+            <label for="regionSelect">
+                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/25.gif" class="mini-poke" alt="Pikachu">
+                RÉGION :
+                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/133.gif" class="mini-poke" alt="Evoli">
+            </label>
+
+            <select id="regionSelect" onchange="initPokedex()">
+                <option value="1-151">Kanto (Gen 1)</option>
+                <option value="152-251">Johto (Gen 2)</option>
+                <option value="252-386">Hoenn (Gen 3)</option>
+                <option value="387-493">Sinnoh (Gen 4)</option>
+                <option value="494-649">Unys (Gen 5)</option>
+                <option value="650-721">Kalos (Gen 6)</option>
+                <option value="722-809">Alola (Gen 7)</option>
+                <option value="810-905">Galar/Hisui (Gen 8)</option>
+                <option value="906-1025">Paldea (Gen 9)</option>
+            </select>
+        </div>
+
+        <div class="stats-wrapper">
+            <div class="stats-container">
+                <p>Progression : <span id="catchCount">0</span> / 1025</p>
+                <div id="statsRegions"></div>
+            </div>
+
+            <div class="recent-captures">
+                <h4>Dernières découvertes</h4>
+                <div id="recentList" class="recent-list">
+                    <p class="no-data">Attrape un Pokémon !</p>
+                </div>
+            </div>
+        </div>
+
+        <button id="resetBtn" class="reset-button">Réinitialiser les données</button>
+        <h3>Ton Pokédex</h3>
+        <div id="pokedexGrid" class="pokedex-grid"></div>
+    </div>
+</div>
+
+<div id="battleArena" class="hidden" style="width: 95%; max-width: 1100px; margin: 40px auto; border: 6px solid #3b4cca; background: white; border-radius: 30px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+    <h2 style="font-family: 'Luckiest Guy', cursive; color: #cc0000; text-align: center; font-size: 2.5rem; margin-bottom: 20px;">⚔️ L'ARÈNE DE COMBAT ⚔️</h2>
+    <div style="display: flex; justify-content: center; gap: 30px; margin-bottom: 20px;">
+    <div style="background: #4cd137; color: white; padding: 10px 20px; border-radius: 15px; font-family: 'Luckiest Guy'; font-size: 1.2rem; box-shadow: 0 4px 0 #3b9e2a;">
+        VICTOIRES : <span id="winCount">0</span>
+    </div>
+    <div style="background: #ff4757; color: white; padding: 10px 20px; border-radius: 15px; font-family: 'Luckiest Guy'; font-size: 1.2rem; box-shadow: 0 4px 0 #a00000;">
+        DÉFAITES : <span id="lossCount">0</span>
+    </div>
+</div>
+    <div style="display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap;">
+        <div id="opponentSide" style="text-align: center; min-width: 250px;">
+            <p style="color: #ff0000; font-family: 'Luckiest Guy'; font-size: 1.5rem; margin-bottom: 10px;">ADVERSAIRE</p>
+            <img id="opponentImg" src="" style="width: 200px; filter: drop-shadow(5px 10px 15px #ccc);">
+            <p id="opponentNameBattle" style="font-family: 'Luckiest Guy'; font-size: 1.8rem; color: #333; margin-top: 10px;"></p>
+            <div id="opponentTypesBattle" style="display: flex; justify-content: center; gap: 10px; margin-top: 5px;"></div>
+        </div>
+
+        <div style="font-family: 'Luckiest Guy'; font-size: 5rem; color: #ffde00; text-shadow: 4px 4px #3b4cca; margin: 20px;">VS</div>
+
+        <div id="playerSide" style="text-align: center; min-width: 250px;">
+            <p style="color: #4cd137; font-family: 'Luckiest Guy'; font-size: 1.5rem; margin-bottom: 10px;">TON CHAMPION</p>
+            <div id="playerSlotBattle" style="width: 200px; height: 200px; border: 6px dashed #3b4cca; border-radius: 25px; display: flex; align-items: center; justify-content: center; background: #f9f9f9; margin: 0 auto;">
+                <span style="font-size: 1rem; color: #777; padding: 10px; text-align: center;">Clique sur un Pokémon de ta grille au-dessus !</span>
+            </div>
+            <p id="playerNameBattle" style="font-family: 'Luckiest Guy'; font-size: 1.8rem; color: #333; margin-top: 10px;"></p>
+        </div>
+    </div>
+
+<div id="typeHint" style="background: #fff9c4; border: 2px dashed #fbc02d; margin: 10px auto; padding: 10px; border-radius: 10px; font-family: 'Arial'; font-size: 0.9rem; color: #555; max-width: 600px; text-align: center;">
+    💡 <strong>CONSEIL DU PROFESSEUR :</strong> Trouve un adversaire pour voir ses points faibles !
+</div>
+
+    <div id="battleLog" style="background: #333; color: white; margin: 25px auto; padding: 20px; border-radius: 15px; font-family: 'Luckiest Guy'; text-align: center; min-height: 60px; font-size: 1.4rem; max-width: 800px; border: 3px solid #ffde00;">
+        Cherche un adversaire pour commencer le duel !
+    </div>
+
+    <div style="text-align: center;">
+        <button onclick="preparerCombat()" style="background: #4cd137; border: none; padding: 0 40px; height: 65px; border-radius: 50px; color: white; font-size: 1.4rem; cursor: pointer; font-family: 'Luckiest Guy'; box-shadow: 0 6px 0 #3b9e2a; display: inline-flex; align-items: center; justify-content: center; gap: 15px; margin: 10px auto; transition: all 0.1s;" onmousedown="this.style.transform='translateY(4px)'; this.style.boxShadow='none'" onmouseup="this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 0 #3b9e2a'">
+            <span>⚔️</span> <span style="position: relative; top: 2px;">TROUVER UN POKÉMON</span> <span>⚔️</span>
+        </button>
+        <button onclick="document.getElementById('battleArena').classList.add('hidden'); window.scrollTo({top: 0, behavior:'smooth'})" style="background: #777; border: none; height: 45px; padding: 0 20px; border-radius: 50px; color: white; font-size: 1rem; cursor: pointer; font-family: 'Luckiest Guy'; box-shadow: 0 4px 0 #444; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; margin-left: 10px;">
+            FERMER
+        </button>
+    </div>
+</div>
+
+<script src="script.js"></script>
+
+<div id="customAlert" class="modal-overlay hidden">
+    <div class="pokemon-modal">
+       <div class="modal-header">
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="Pokéball">
+    <span id="modalTitle">MESSAGE DE SACHA</span>
+</div>
+        <div class="modal-body">
+            <p id="modalMessage"></p>
+        </div>
+        <div class="modal-footer">
+            <button id="modalCancelBtn" onclick="closeModal()" class="modal-button cancel">ANNULER</button>
+            <button id="modalConfirmBtn" class="modal-button">OK</button>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
